@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
@@ -20,6 +20,15 @@ In Progress
 - Phase 2 and 3 specs at @context/features/dashboard-phase-2-spec.md and @context/features/dashboard-phase-3-spec.md
 
 ## History
+
+### Dashboard UI Phase 1 - Layout & Setup
+
+- Initialized shadcn/ui (base-nova style, neutral theme, Lucide icons)
+- Installed Button and Input shadcn components
+- Set up dark mode by default (dark class on html element)
+- Created /dashboard route with layout and page
+- Top bar with DevStash logo, search input (⌘K), New Collection and New Item buttons (display only)
+- Sidebar and main area placeholders
 
 ### Initial Setup - Next.js Project Scaffolding
 
