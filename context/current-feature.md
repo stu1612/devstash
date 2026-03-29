@@ -1,4 +1,4 @@
-# Current Feature — Prisma + Neon PostgreSQL Setup
+# Current Feature — Seed Data
 
 ## Status
 
@@ -6,22 +6,28 @@ In Progress
 
 ## Goals
 
-- Set up Prisma ORM with Neon PostgreSQL (serverless)
-- Use Prisma 7 (has breaking changes - follow upgrade guide)
-- Create initial schema based on data models in project-overview.md
-- Include NextAuth models (Account, Session, VerificationToken)
-- Add appropriate indexes and cascade deletes
-- Always create migrations, never push directly unless specified
-- Separate development and production database branches (DATABASE_URL)
+- Overwrite existing seed script (`prisma/seed.ts`) with full sample data
+- Create a demo user (demo@devstash.io, password hashed with bcryptjs)
+- Seed all 7 system item types using Lucide icon names and correct colors
+- Seed 5 collections: React Patterns, AI Workflows, DevOps, Terminal Commands, Design Resources
+- Seed items into each collection per seed-spec.md (snippets, prompts, commands, links)
+- Use upserts where possible to allow re-running
 
 ## Notes
 
+- Spec: @context/features/seed-spec.md
 - References: @context/project-overview.md, @context/coding-standards.md
-- Spec: @context/features/database-spec.md
-- Prisma 7 upgrade guide: https://www.prisma.io/docs/orm/more/upgrade-guides/upgrading-versions/upgrading-to-prisma-7
-- Prisma Postgres quickstart: https://www.prisma.io/docs/getting-started/prisma-orm/quickstart/prisma-postgres
 
 ## History
+
+### Prisma + Neon PostgreSQL Setup
+
+- Installed Prisma 7 with Neon PostgreSQL adapter (@prisma/adapter-pg)
+- Created initial schema with User, Item, ItemType, Collection, Tag, ItemTag models
+- Added NextAuth models (Account, Session, VerificationToken)
+- Added indexes and cascade deletes
+- Created initial migration
+- Created basic seed script with system item types only
 
 ### Dashboard UI Phase 3 - Main Content Area
 
