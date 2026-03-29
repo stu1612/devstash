@@ -1,20 +1,36 @@
-import { Star } from "lucide-react";
-import { items, itemTypes } from "@/lib/mock-data";
+import {
+  Star,
+  Code,
+  Sparkles,
+  Terminal,
+  StickyNote,
+  File,
+  Image,
+  Link as LinkIcon,
+} from "lucide-react";
+import type { ItemWithDetails } from "@/lib/db/items";
 
-export function RecentItems() {
-  const recentItems = [...items]
-    .sort(
-      (a, b) =>
-        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-    )
-    .slice(0, 10);
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  Code,
+  Sparkles,
+  Terminal,
+  StickyNote,
+  File,
+  Image,
+  Link: LinkIcon,
+};
 
+interface RecentItemsProps {
+  items: ItemWithDetails[];
+}
+
+export function RecentItems({ items }: RecentItemsProps) {
   return (
     <section>
       <h2 className="mb-4 text-lg font-semibold">Recent Items</h2>
       <div className="space-y-2">
-        {recentItems.map((item) => {
-          const type = itemTypes.find((t) => t.id === item.typeId);
+        {items.map((item) => {
+          const TypeIcon = item.type.icon ? iconMap[item.type.icon] : null;
           return (
             <div
               key={item.id}
@@ -22,7 +38,12 @@ export function RecentItems() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  {type && <span>{type.icon}</span>}
+                  {TypeIcon && (
+                    <TypeIcon
+                      className="size-4"
+                      style={{ color: item.type.color ?? undefined }}
+                    />
+                  )}
                   <h3 className="font-medium">{item.title}</h3>
                   {item.isFavorite && (
                     <Star className="size-3.5 fill-yellow-500 text-yellow-500" />
@@ -34,7 +55,7 @@ export function RecentItems() {
               </div>
               <div className="ml-4 flex flex-col items-end gap-1">
                 <span className="text-xs text-muted-foreground">
-                  {new Date(item.updatedAt).toLocaleDateString("en-US", {
+                  {item.updatedAt.toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })}

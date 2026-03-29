@@ -1,10 +1,37 @@
-import { Pin, Star } from "lucide-react";
-import { items, itemTypes } from "@/lib/mock-data";
+import {
+  Pin,
+  Star,
+  Code,
+  Sparkles,
+  Terminal,
+  StickyNote,
+  File,
+  Image,
+  Link as LinkIcon,
+} from "lucide-react";
+import type { ItemWithDetails } from "@/lib/db/items";
 
-export function PinnedItems() {
-  const pinnedItems = items.filter((item) => item.isPinned);
+const iconMap: Record<
+  string,
+  React.ComponentType<React.SVGProps<SVGSVGElement>>
+> = {
+  Code,
+  Sparkles,
+  Terminal,
+  StickyNote,
+  File,
+  Image,
+  Link: LinkIcon,
+};
 
-  if (pinnedItems.length === 0) return null;
+interface PinnedItemsProps {
+  items: ItemWithDetails[];
+}
+
+export function PinnedItems({ items }: PinnedItemsProps) {
+  if (items.length === 0) return null;
+
+  console.log("Rendering PinnedItems with items:", items);
 
   return (
     <section>
@@ -13,8 +40,8 @@ export function PinnedItems() {
         <h2 className="text-lg font-semibold">Pinned</h2>
       </div>
       <div className="space-y-2">
-        {pinnedItems.map((item) => {
-          const type = itemTypes.find((t) => t.id === item.typeId);
+        {items.map((item) => {
+          const TypeIcon = item.type.icon ? iconMap[item.type.icon] : null;
           return (
             <div
               key={item.id}
@@ -31,28 +58,36 @@ export function PinnedItems() {
                 <p className="mt-0.5 line-clamp-1 text-sm text-muted-foreground">
                   {item.description}
                 </p>
-                <div className="mt-2 flex items-center gap-2">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag.id}
-                      className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground"
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
-                </div>
+                {item.tags.length > 0 && (
+                  <div className="mt-2 flex items-center gap-2">
+                    {item.tags.map((tag) => (
+                      <span
+                        key={tag.name}
+                        className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground"
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="ml-4 flex flex-col items-end gap-1">
                 <span className="text-xs text-muted-foreground">
-                  {new Date(item.createdAt).toLocaleDateString("en-US", {
+                  {item.createdAt.toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                   })}
                 </span>
-                {type && (
-                  <span className="text-xs text-muted-foreground">
-                    {type.icon} {type.name}
-                  </span>
+                {TypeIcon && (
+                  <div className="flex items-center gap-1">
+                    <TypeIcon
+                      className="size-3.5"
+                      style={{ color: item.type.color ?? undefined }}
+                    />
+                    <span className="text-xs text-muted-foreground">
+                      {item.type.name}
+                    </span>
+                  </div>
                 )}
               </div>
             </div>

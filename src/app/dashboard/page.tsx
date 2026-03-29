@@ -2,15 +2,15 @@ import { StatsCards } from "@/components/dashboard/StatsCards";
 import { CollectionsGrid } from "@/components/dashboard/CollectionsGrid";
 import { PinnedItems } from "@/components/dashboard/PinnedItems";
 import { RecentItems } from "@/components/dashboard/RecentItems";
-import {
-  getRecentCollections,
-  getCollectionStats,
-} from "@/lib/db/collections";
+import { getRecentCollections, getCollectionStats } from "@/lib/db/collections";
+import { getPinnedItems, getRecentItems } from "@/lib/db/items";
 
 export default async function DashboardPage() {
-  const [collections, stats] = await Promise.all([
+  const [collections, stats, pinnedItems, recentItems] = await Promise.all([
     getRecentCollections(6),
     getCollectionStats(),
+    getPinnedItems(),
+    getRecentItems(10),
   ]);
 
   return (
@@ -33,10 +33,10 @@ export default async function DashboardPage() {
       <CollectionsGrid collections={collections} />
 
       {/* Pinned */}
-      <PinnedItems />
+      <PinnedItems items={pinnedItems} />
 
       {/* Recent Items */}
-      <RecentItems />
+      <RecentItems items={recentItems} />
     </div>
   );
 }

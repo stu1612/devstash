@@ -14,6 +14,17 @@ None
 
 ## History
 
+### Dashboard Items - Real DB Data
+
+- Created src/lib/db/items.ts with getPinnedItems() and getRecentItems() functions
+- getPinnedItems() fetches pinned items with type info (icon, color, name) and tags
+- getRecentItems() fetches most recent items (default 10) sorted by updatedAt
+- Updated PinnedItems to accept items as props, render Lucide icons for item types with colors, and display tags from DB
+- Updated RecentItems to accept items as props with Lucide icons for item types
+- Dashboard page now fetches pinned and recent items in parallel alongside collections and stats
+- Removed mock data imports from PinnedItems and RecentItems
+- If no pinned items exist, the pinned section does not render
+
 ### Dashboard Collections - Real DB Data
 
 - Created src/lib/db/collections.ts with getRecentCollections() and getCollectionStats() functions
