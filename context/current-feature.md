@@ -1,4 +1,4 @@
-# Current Feature — Dashboard UI Phase 1
+# Current Feature
 
 ## Status
 
@@ -6,20 +6,22 @@ Completed
 
 ## Goals
 
-- ShadCN UI initialization and components
-- ShadCN component installation
-- Dashboard route at /dashboard
-- Main dashboard layout and any global styles
-- Dark mode by default
-- Top bar with search and new item button (display only)
-- Placeholder for sidebar and main area. Just add an h2 with "Sidebar" and "Main" for now.
+None
 
 ## Notes
 
-- References: @context/screenshots/dashboard-ui-main.png, @context/project-overview.md, @src/lib/mock-data.ts
-- Phase 2 and 3 specs at @context/features/dashboard-phase-2-spec.md and @context/features/dashboard-phase-3-spec.md
+None
 
 ## History
+
+### Dashboard UI Phase 2 - Sidebar
+
+- Installed shadcn Sheet, Avatar, Separator, Tooltip components
+- Created DashboardShell client component with collapsible sidebar and mobile drawer
+- Created SidebarContent component with item types (linked to /items/TYPE), favorite collections, most recent collections, and user avatar area
+- PanelLeft toggle button for desktop collapse/expand
+- Sheet drawer for mobile view
+- Simplified dashboard layout to use DashboardShell
 
 ### Dashboard UI Phase 1 - Layout & Setup
 
