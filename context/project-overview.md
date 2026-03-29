@@ -17,30 +17,30 @@ The result: context switching, lost knowledge, and inconsistent workflows.
 
 ## Target Users
 
-| Persona | Key Needs |
-|---|---|
-| **Everyday Developer** | Quick access to snippets, commands, and links |
-| **AI-First Developer** | Store and organize prompts, workflows, and context files |
-| **Content Creator / Educator** | Save course notes, reusable code examples |
-| **Full-Stack Builder** | Patterns, boilerplates, API references |
+| Persona                        | Key Needs                                                |
+| ------------------------------ | -------------------------------------------------------- |
+| **Everyday Developer**         | Quick access to snippets, commands, and links            |
+| **AI-First Developer**         | Store and organize prompts, workflows, and context files |
+| **Content Creator / Educator** | Save course notes, reusable code examples                |
+| **Full-Stack Builder**         | Patterns, boilerplates, API references                   |
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| **Framework** | [Next.js](https://nextjs.org/) (React 19, App Router) |
-| **Language** | TypeScript |
-| **Database** | [Neon PostgreSQL](https://neon.tech/) + [Prisma ORM](https://www.prisma.io/) |
-| **Caching** | Redis (optional) |
-| **File Storage** | [Cloudflare R2](https://developers.cloudflare.com/r2/) |
-| **UI** | [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
-| **Auth** | [NextAuth v5](https://authjs.dev/) (Email + GitHub OAuth) |
-| **AI** | [OpenAI](https://platform.openai.com/) — `gpt-5-nano` |
-| **Payments** | [Stripe](https://stripe.com/) (subscriptions + webhooks) |
-| **Deployment** | [Vercel](https://vercel.com/) |
-| **Monitoring** | [Sentry](https://sentry.io/) (later phase) |
+| Layer            | Technology                                                                        |
+| ---------------- | --------------------------------------------------------------------------------- |
+| **Framework**    | [Next.js](https://nextjs.org/) (React 19, App Router)                             |
+| **Language**     | TypeScript                                                                        |
+| **Database**     | [Neon PostgreSQL](https://neon.tech/) + [Prisma ORM](https://www.prisma.io/)      |
+| **Caching**      | Redis (optional)                                                                  |
+| **File Storage** | [Cloudflare R2](https://developers.cloudflare.com/r2/)                            |
+| **UI**           | [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
+| **Auth**         | [NextAuth v5](https://authjs.dev/) (Email + GitHub OAuth)                         |
+| **AI**           | [OpenAI](https://platform.openai.com/) — `gpt-5-nano`                             |
+| **Payments**     | [Stripe](https://stripe.com/) (subscriptions + webhooks)                          |
+| **Deployment**   | [Vercel](https://vercel.com/)                                                     |
+| **Monitoring**   | [Sentry](https://sentry.io/) (later phase)                                        |
 
 ---
 
@@ -50,21 +50,21 @@ The result: context switching, lost knowledge, and inconsistent workflows.
 
 Every piece of saved knowledge is an **Item**. Each item belongs to one of these built-in types:
 
-| Type | Description |
-|---|---|
+| Type        | Description                                   |
+| ----------- | --------------------------------------------- |
 | **Snippet** | Reusable code blocks with syntax highlighting |
-| **Prompt** | AI prompts and prompt templates |
-| **Note** | Freeform markdown content |
-| **Command** | Terminal / CLI commands |
-| **File** | Uploaded documents and templates |
-| **Image** | Screenshots, diagrams, visual references |
-| **URL** | Bookmarked links and references |
+| **Prompt**  | AI prompts and prompt templates               |
+| **Note**    | Freeform markdown content                     |
+| **Command** | Terminal / CLI commands                       |
+| **File**    | Uploaded documents and templates              |
+| **Image**   | Screenshots, diagrams, visual references      |
+| **URL**     | Bookmarked links and references               |
 
 Pro users can create **custom item types** with their own name, icon, and color.
 
 ### Collections
 
-Group items of any type into named collections. Examples: *React Patterns*, *Context Files*, *Python Snippets*.
+Group items of any type into named collections. Examples: _React Patterns_, _Context Files_, _Python Snippets_.
 
 ### Search
 
@@ -88,12 +88,12 @@ Full-text search across content, tags, titles, and types.
 
 ### AI Superpowers (Pro only)
 
-| Feature | Description |
-|---|---|
-| **Auto-tagging** | Suggest relevant tags based on item content |
-| **AI Summaries** | Generate concise summaries of notes, snippets, or docs |
-| **Explain Code** | Get plain-language explanations of code snippets |
-| **Prompt Optimization** | Improve and refine AI prompts |
+| Feature                 | Description                                            |
+| ----------------------- | ------------------------------------------------------ |
+| **Auto-tagging**        | Suggest relevant tags based on item content            |
+| **AI Summaries**        | Generate concise summaries of notes, snippets, or docs |
+| **Explain Code**        | Get plain-language explanations of code snippets       |
+| **Prompt Optimization** | Improve and refine AI prompts                          |
 
 Powered by OpenAI `gpt-5-nano`.
 
@@ -243,17 +243,17 @@ flowchart TD
 
 ## Monetization
 
-| | Free | Pro |
-|---|---|---|
-| **Price** | $0 | $8/mo or $72/yr |
-| **Items** | 50 | Unlimited |
-| **Collections** | 3 | Unlimited |
-| **Search** | Basic | Full-text |
-| **Image uploads** | Yes | Yes |
-| **File uploads** | No | Yes |
-| **Custom types** | No | Yes |
-| **AI features** | No | Yes |
-| **Export** | No | JSON / ZIP |
+|                   | Free  | Pro             |
+| ----------------- | ----- | --------------- |
+| **Price**         | $0    | $8/mo or $72/yr |
+| **Items**         | 50    | Unlimited       |
+| **Collections**   | 3     | Unlimited       |
+| **Search**        | Basic | Full-text       |
+| **Image uploads** | Yes   | Yes             |
+| **File uploads**  | No    | Yes             |
+| **Custom types**  | No    | Yes             |
+| **AI features**   | No    | Yes             |
+| **Export**        | No    | JSON / ZIP      |
 
 Billing handled via Stripe subscriptions with webhook-based sync.
 
@@ -268,6 +268,13 @@ Billing handled via Stripe subscriptions with webhook-based sync.
 - Main workspace in grid or list view
 - Full-screen item editor
 - Responsive: mobile drawer for sidebar, touch-optimized controls
+
+### Screenshots
+
+- Refer to the screenhsots below for the dashboard UI. It does not have to be exact. Use it as a reference:
+
+- @context/screenshots/dashboard-ui-main.png
+- @context/screenshots/dashboard-ui-drawer.png
 
 ---
 
