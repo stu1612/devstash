@@ -1,24 +1,29 @@
-# Current Feature — Seed Data
+# Current Feature
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-- Overwrite existing seed script (`prisma/seed.ts`) with full sample data
-- Create a demo user (demo@devstash.io, password hashed with bcryptjs)
-- Seed all 7 system item types using Lucide icon names and correct colors
-- Seed 5 collections: React Patterns, AI Workflows, DevOps, Terminal Commands, Design Resources
-- Seed items into each collection per seed-spec.md (snippets, prompts, commands, links)
-- Use upserts where possible to allow re-running
+None — awaiting next feature.
 
 ## Notes
 
-- Spec: @context/features/seed-spec.md
-- References: @context/project-overview.md, @context/coding-standards.md
+None
 
 ## History
+
+### Seed Data
+
+- Installed bcryptjs for password hashing
+- Rewrote seed script with full sample data per seed-spec.md
+- Created demo user (demo@devstash.io, hashed password, emailVerified)
+- Seeded 7 system item types with Lucide icon names and correct colors
+- Seeded 5 collections: React Patterns, AI Workflows, DevOps, Terminal Commands, Design Resources
+- Seeded 18 items across all collections (snippets, prompts, commands, links)
+- Cleaned up old emoji-based item types from previous seed
+- Updated test-db.ts to display all seeded data
 
 ### Prisma + Neon PostgreSQL Setup
 
