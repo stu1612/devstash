@@ -14,6 +14,16 @@ None
 
 ## History
 
+### Dashboard Collections - Real DB Data
+
+- Created src/lib/db/collections.ts with getRecentCollections() and getCollectionStats() functions
+- getRecentCollections() fetches collections with item type summaries (icon, color, count per type, dominant color)
+- getCollectionStats() returns counts for total items, collections, favorite items, and favorite collections
+- Updated CollectionsGrid to accept collections as props, render border color from most-used item type, and show Lucide icons for all types in each collection
+- Updated StatsCards to accept stats as props instead of importing mock data
+- Converted dashboard page to async server component fetching real data in parallel
+- Removed mock data imports from CollectionsGrid and StatsCards
+
 ### Seed Data
 
 - Installed bcryptjs for password hashing

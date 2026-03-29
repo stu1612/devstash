@@ -1,34 +1,45 @@
 import { Package, FolderOpen, Star, Heart } from "lucide-react";
-import { items, collections } from "@/lib/mock-data";
 
-const stats = [
-  {
-    label: "Total Items",
-    value: items.length,
-    icon: Package,
-    color: "text-blue-500",
-  },
-  {
-    label: "Collections",
-    value: collections.length,
-    icon: FolderOpen,
-    color: "text-green-500",
-  },
-  {
-    label: "Favorite Items",
-    value: items.filter((i) => i.isFavorite).length,
-    icon: Star,
-    color: "text-yellow-500",
-  },
-  {
-    label: "Favorite Collections",
-    value: collections.filter((c) => c.isFavorite).length,
-    icon: Heart,
-    color: "text-pink-500",
-  },
-];
+interface StatsCardsProps {
+  totalItems: number;
+  totalCollections: number;
+  favoriteItems: number;
+  favoriteCollections: number;
+}
 
-export function StatsCards() {
+export function StatsCards({
+  totalItems,
+  totalCollections,
+  favoriteItems,
+  favoriteCollections,
+}: StatsCardsProps) {
+  const stats = [
+    {
+      label: "Total Items",
+      value: totalItems,
+      icon: Package,
+      color: "text-blue-500",
+    },
+    {
+      label: "Collections",
+      value: totalCollections,
+      icon: FolderOpen,
+      color: "text-green-500",
+    },
+    {
+      label: "Favorite Items",
+      value: favoriteItems,
+      icon: Star,
+      color: "text-yellow-500",
+    },
+    {
+      label: "Favorite Collections",
+      value: favoriteCollections,
+      icon: Heart,
+      color: "text-pink-500",
+    },
+  ];
+
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
       {stats.map((stat) => (
