@@ -48,6 +48,32 @@ export async function getPinnedItems(): Promise<ItemWithDetails[]> {
   }));
 }
 
+export type SystemItemType = {
+  id: string;
+  name: string;
+  icon: string | null;
+  color: string | null;
+  count: number;
+};
+
+export async function getSystemItemTypes(): Promise<SystemItemType[]> {
+  const types = await prisma.itemType.findMany({
+    where: { isSystem: true },
+    include: {
+      _count: { select: { items: true } },
+    },
+    orderBy: { name: "asc" },
+  });
+
+  return types.map((t) => ({
+    id: t.id,
+    name: t.name,
+    icon: t.icon,
+    color: t.color,
+    count: t._count.items,
+  }));
+}
+
 export async function getRecentItems(
   limit = 10
 ): Promise<ItemWithDetails[]> {

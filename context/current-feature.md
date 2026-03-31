@@ -14,6 +14,16 @@ None
 
 ## History
 
+### Stats & Sidebar - Real DB Data
+
+- Added getSystemItemTypes() to src/lib/db/items.ts returning system item types with item counts
+- Added getFavoriteCollections() and getSidebarRecentCollections() to src/lib/db/collections.ts with dominant color per collection
+- Replaced mock data in SidebarContent with props — item types show Lucide icons with colors, favorites keep star icons, recents show colored circles based on dominant item type
+- Added "View all collections" link under recent collections
+- Updated DashboardShell to accept and pass sidebar data props
+- Converted dashboard layout.tsx to async server component fetching sidebar data in parallel
+- Removed mock data imports (itemTypes, collections, currentUser) from SidebarContent
+
 ### Dashboard Items - Real DB Data
 
 - Created src/lib/db/items.ts with getPinnedItems() and getRecentItems() functions

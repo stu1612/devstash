@@ -11,9 +11,25 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { SidebarContent } from "./SidebarContent";
+import type { SystemItemType } from "@/lib/db/items";
+import type { SidebarCollection } from "@/lib/db/collections";
 
-export function DashboardShell({ children }: { children: React.ReactNode }) {
+interface DashboardShellProps {
+  children: React.ReactNode;
+  itemTypes: SystemItemType[];
+  favoriteCollections: SidebarCollection[];
+  recentCollections: SidebarCollection[];
+}
+
+export function DashboardShell({
+  children,
+  itemTypes,
+  favoriteCollections,
+  recentCollections,
+}: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const sidebarProps = { itemTypes, favoriteCollections, recentCollections };
 
   return (
     <div className="flex h-screen flex-col bg-background text-foreground">
@@ -46,7 +62,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               className="w-64 p-0"
             >
               <SheetTitle className="sr-only">Navigation</SheetTitle>
-              <SidebarContent />
+              <SidebarContent {...sidebarProps} />
             </SheetContent>
           </Sheet>
 
@@ -90,7 +106,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             sidebarOpen ? "w-60" : "w-0 overflow-hidden border-r-0"
           }`}
         >
-          <SidebarContent />
+          <SidebarContent {...sidebarProps} />
         </aside>
 
         {/* Main Content */}

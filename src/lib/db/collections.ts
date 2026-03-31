@@ -66,6 +66,74 @@ export async function getRecentCollections(
   });
 }
 
+export type SidebarCollection = {
+  id: string;
+  name: string;
+  isFavorite: boolean;
+  dominantColor: string | null;
+};
+
+export async function getFavoriteCollections(): Promise<SidebarCollection[]> {
+  const collections = await prisma.collection.findMany({
+    where: { user: { email: DEMO_USER_EMAIL }, isFavorite: true },
+    orderBy: { updatedAt: "desc" },
+    include: {
+      items: {
+        include: { type: { select: { color: true } } },
+      },
+    },
+  });
+
+  return collections.map((col) => {
+    const colorCounts = new Map<string, number>();
+    for (const item of col.items) {
+      if (item.type.color) {
+        colorCounts.set(item.type.color, (colorCounts.get(item.type.color) ?? 0) + 1);
+      }
+    }
+    const dominantColor = [...colorCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+
+    return {
+      id: col.id,
+      name: col.name,
+      isFavorite: col.isFavorite,
+      dominantColor,
+    };
+  });
+}
+
+export async function getSidebarRecentCollections(
+  limit = 5
+): Promise<SidebarCollection[]> {
+  const collections = await prisma.collection.findMany({
+    where: { user: { email: DEMO_USER_EMAIL } },
+    orderBy: { updatedAt: "desc" },
+    take: limit,
+    include: {
+      items: {
+        include: { type: { select: { color: true } } },
+      },
+    },
+  });
+
+  return collections.map((col) => {
+    const colorCounts = new Map<string, number>();
+    for (const item of col.items) {
+      if (item.type.color) {
+        colorCounts.set(item.type.color, (colorCounts.get(item.type.color) ?? 0) + 1);
+      }
+    }
+    const dominantColor = [...colorCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+
+    return {
+      id: col.id,
+      name: col.name,
+      isFavorite: col.isFavorite,
+      dominantColor,
+    };
+  });
+}
+
 export async function getCollectionStats() {
   const user = await prisma.user.findUnique({
     where: { email: DEMO_USER_EMAIL },
