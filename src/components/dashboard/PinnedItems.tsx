@@ -31,8 +31,6 @@ interface PinnedItemsProps {
 export function PinnedItems({ items }: PinnedItemsProps) {
   if (items.length === 0) return null;
 
-  console.log("Rendering PinnedItems with items:", items);
-
   return (
     <section>
       <div className="mb-4 flex items-center gap-2">
