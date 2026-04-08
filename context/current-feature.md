@@ -2,15 +2,17 @@
 
 ## Status
 
-Completed
+In Progress
 
 ## Goals
 
-None — awaiting next feature.
+Refactor collection queries to push aggregation to the database instead of loading all items into JS memory.
 
 ## Notes
 
-None
+- `getRecentCollections` — use `_count` and `groupBy` instead of loading all items
+- `getFavoriteCollections` — use `groupBy` to find dominant color
+- `getSidebarRecentCollections` — same as above
 
 ## History
 

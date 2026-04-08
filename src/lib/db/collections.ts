@@ -21,47 +21,46 @@ export async function getRecentCollections(
     orderBy: { updatedAt: "desc" },
     take: limit,
     include: {
-      items: {
-        include: {
-          type: true,
-        },
-      },
+      _count: { select: { items: true } },
     },
   });
 
+  const collectionIds = collections.map((c) => c.id);
+
+  const [typeCounts, typeRows] = await Promise.all([
+    prisma.item.groupBy({
+      by: ["collectionId", "typeId"],
+      where: { collectionId: { in: collectionIds } },
+      _count: { _all: true },
+    }),
+    prisma.itemType.findMany({
+      where: {
+        items: { some: { collectionId: { in: collectionIds } } },
+      },
+      select: { id: true, name: true, icon: true, color: true },
+    }),
+  ]);
+
+  const typeMap = new Map(typeRows.map((t) => [t.id, t]));
+
   return collections.map((col) => {
-    const typeCounts = new Map<
-      string,
-      { name: string; icon: string | null; color: string | null; count: number }
-    >();
-
-    for (const item of col.items) {
-      const existing = typeCounts.get(item.typeId);
-      if (existing) {
-        existing.count++;
-      } else {
-        typeCounts.set(item.typeId, {
-          name: item.type.name,
-          icon: item.type.icon,
-          color: item.type.color,
-          count: 1,
-        });
-      }
-    }
-
-    const types = Array.from(typeCounts.values()).sort(
-      (a, b) => b.count - a.count
-    );
+    const colTypes = typeCounts
+      .filter((tc) => tc.collectionId === col.id)
+      .map((tc) => {
+        const type = typeMap.get(tc.typeId)!;
+        return { name: type.name, icon: type.icon, color: type.color, count: tc._count._all };
+      })
+      .sort((a, b) => b.count - a.count);
 
     return {
       id: col.id,
       name: col.name,
       description: col.description,
       isFavorite: col.isFavorite,
-      itemCount: col.items.length,
+      itemCount: col._count.items,
       updatedAt: col.updatedAt,
-      types,
-      dominantColor: types[0]?.color ?? null,
+      types: colTypes,
+      dominantColor: colTypes[0]?.color ?? null,
     };
   });
 }
@@ -73,33 +72,47 @@ export type SidebarCollection = {
   dominantColor: string | null;
 };
 
+async function getDominantColors(
+  collectionIds: string[]
+): Promise<Map<string, string | null>> {
+  const typeCounts = await prisma.item.groupBy({
+    by: ["collectionId", "typeId"],
+    where: { collectionId: { in: collectionIds } },
+    _count: { _all: true },
+  });
+
+  const typeIds = [...new Set(typeCounts.map((tc) => tc.typeId))];
+  const types = await prisma.itemType.findMany({
+    where: { id: { in: typeIds } },
+    select: { id: true, color: true },
+  });
+  const colorMap = new Map(types.map((t) => [t.id, t.color]));
+
+  const result = new Map<string, string | null>();
+  for (const colId of collectionIds) {
+    const top = typeCounts
+      .filter((tc) => tc.collectionId === colId)
+      .sort((a, b) => b._count._all - a._count._all)[0];
+    result.set(colId, top ? (colorMap.get(top.typeId) ?? null) : null);
+  }
+  return result;
+}
+
 export async function getFavoriteCollections(): Promise<SidebarCollection[]> {
   const collections = await prisma.collection.findMany({
     where: { user: { email: DEMO_USER_EMAIL }, isFavorite: true },
     orderBy: { updatedAt: "desc" },
-    include: {
-      items: {
-        include: { type: { select: { color: true } } },
-      },
-    },
+    select: { id: true, name: true, isFavorite: true },
   });
 
-  return collections.map((col) => {
-    const colorCounts = new Map<string, number>();
-    for (const item of col.items) {
-      if (item.type.color) {
-        colorCounts.set(item.type.color, (colorCounts.get(item.type.color) ?? 0) + 1);
-      }
-    }
-    const dominantColor = [...colorCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const colors = await getDominantColors(collections.map((c) => c.id));
 
-    return {
-      id: col.id,
-      name: col.name,
-      isFavorite: col.isFavorite,
-      dominantColor,
-    };
-  });
+  return collections.map((col) => ({
+    id: col.id,
+    name: col.name,
+    isFavorite: col.isFavorite,
+    dominantColor: colors.get(col.id) ?? null,
+  }));
 }
 
 export async function getSidebarRecentCollections(
@@ -109,29 +122,17 @@ export async function getSidebarRecentCollections(
     where: { user: { email: DEMO_USER_EMAIL } },
     orderBy: { updatedAt: "desc" },
     take: limit,
-    include: {
-      items: {
-        include: { type: { select: { color: true } } },
-      },
-    },
+    select: { id: true, name: true, isFavorite: true },
   });
 
-  return collections.map((col) => {
-    const colorCounts = new Map<string, number>();
-    for (const item of col.items) {
-      if (item.type.color) {
-        colorCounts.set(item.type.color, (colorCounts.get(item.type.color) ?? 0) + 1);
-      }
-    }
-    const dominantColor = [...colorCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const colors = await getDominantColors(collections.map((c) => c.id));
 
-    return {
-      id: col.id,
-      name: col.name,
-      isFavorite: col.isFavorite,
-      dominantColor,
-    };
-  });
+  return collections.map((col) => ({
+    id: col.id,
+    name: col.name,
+    isFavorite: col.isFavorite,
+    dominantColor: colors.get(col.id) ?? null,
+  }));
 }
 
 export async function getCollectionStats() {
