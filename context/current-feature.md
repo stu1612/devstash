@@ -2,20 +2,25 @@
 
 ## Status
 
-In Progress
+Completed
 
 ## Goals
 
-Quick wins from codebase audit — low-risk cleanup items.
+None — awaiting next feature.
 
 ## Notes
 
-- Extract shared `iconMap` to `src/lib/icon-map.ts` (duplicated across 4 components)
-- Add `DATABASE_URL` validation in `src/lib/prisma.ts` (replace non-null assertion)
-- Add production guard to seed script
-- Add skeleton loading states for dashboard components
+None
 
 ## History
+
+### Quick Wins Cleanup
+
+- Extracted shared `iconMap` to `src/lib/icon-map.ts` (removed duplication from 4 dashboard components)
+- Added `DATABASE_URL` validation in `src/lib/prisma.ts` and `prisma/seed.ts`
+- Added production guard to seed script (`NODE_ENV=production` throws)
+- Installed shadcn Skeleton component
+- Added `src/app/dashboard/loading.tsx` with skeleton loading states for stats, collections, and recent items
 
 ### Collection Query Overfetch Fix
 
