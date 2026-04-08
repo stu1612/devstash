@@ -1,28 +1,6 @@
-import {
-  Pin,
-  Star,
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link as LinkIcon,
-} from "lucide-react";
+import { Pin, Star } from "lucide-react";
+import { iconMap } from "@/lib/icon-map";
 import type { ItemWithDetails } from "@/lib/db/items";
-
-const iconMap: Record<
-  string,
-  React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link: LinkIcon,
-};
 
 interface PinnedItemsProps {
   items: ItemWithDetails[];

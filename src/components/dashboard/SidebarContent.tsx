@@ -1,33 +1,11 @@
 import Link from "next/link";
-import {
-  Star,
-  Settings,
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link as LinkIcon,
-} from "lucide-react";
+import { Star, Settings } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { iconMap } from "@/lib/icon-map";
 import type { SystemItemType } from "@/lib/db/items";
 import type { SidebarCollection } from "@/lib/db/collections";
-
-const iconMap: Record<
-  string,
-  React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link: LinkIcon,
-};
 
 interface SidebarContentProps {
   itemTypes: SystemItemType[];

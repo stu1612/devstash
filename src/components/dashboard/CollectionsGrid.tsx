@@ -1,25 +1,7 @@
 import Link from "next/link";
-import {
-  Star,
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link as LinkIcon,
-} from "lucide-react";
+import { Star } from "lucide-react";
+import { iconMap } from "@/lib/icon-map";
 import type { CollectionWithTypeSummary } from "@/lib/db/collections";
-
-const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-  Code,
-  Sparkles,
-  Terminal,
-  StickyNote,
-  File,
-  Image,
-  Link: LinkIcon,
-};
 
 interface CollectionsGridProps {
   collections: CollectionWithTypeSummary[];

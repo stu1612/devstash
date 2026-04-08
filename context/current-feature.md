@@ -6,15 +6,22 @@ In Progress
 
 ## Goals
 
-Refactor collection queries to push aggregation to the database instead of loading all items into JS memory.
+Quick wins from codebase audit — low-risk cleanup items.
 
 ## Notes
 
-- `getRecentCollections` — use `_count` and `groupBy` instead of loading all items
-- `getFavoriteCollections` — use `groupBy` to find dominant color
-- `getSidebarRecentCollections` — same as above
+- Extract shared `iconMap` to `src/lib/icon-map.ts` (duplicated across 4 components)
+- Add `DATABASE_URL` validation in `src/lib/prisma.ts` (replace non-null assertion)
+- Add production guard to seed script
+- Add skeleton loading states for dashboard components
 
 ## History
+
+### Collection Query Overfetch Fix
+
+- Refactored `getRecentCollections` to use `_count` and `groupBy` instead of loading all items
+- Refactored `getFavoriteCollections` and `getSidebarRecentCollections` to use shared `getDominantColors` helper with `groupBy`
+- All aggregation now happens in PostgreSQL instead of JS memory
 
 ### Add Pro Badge to Sidebar
 
